@@ -5,17 +5,22 @@
       %span.navbar-toggler-icon
     #navbarNavDropdown.collapse.navbar-collapse
       %ul.navbar-nav
-        %li.nav-item
-          = link_to '新規登録', new_user_registration_path, class: 'nav-link'
-        %li.nav-item
-          %a.nav-link{:href => "#"} カートを見る
-        %li.nav-item.dropdown
-          %a.nav-link.dropdown-toggle{"data-bs-toggle" => "dropdown", :href => "#", :role => "button"}
-            ユーザー情報
-          %ul.dropdown-menu
-            %li
-              %a.dropdown-item{:href => "#"}
-            %li
-              %a.dropdown-item{:href => "#"} Another action
-            %li
-              %a.dropdown-item{:href => "#"} Something else here
+        - if user_signed_in?
+          %li.nav-item
+          = link_to '商品一覧', '#', class: 'nav-link'
+          %li.nav-item
+            = link_to 'カートを見る', '#', class: 'nav-link'
+          %li.nav-item.dropdown
+            %a.nav-link.dropdown-toggle{"data-bs-toggle" => "dropdown", :href => "#", :role => "button"}= current_user.email
+            %ul.dropdown-menu
+              %li
+                %a.dropdown-item{:href => "#"} 購入履歴
+              %li
+                %a.dropdown-item{:href => "#"} 配送先
+              %li
+                = link_to 'ログアウト', destroy_user_session_path, class: 'dropdown-item', data: { turbo_method: :delete }
+        - else
+          %li.nav-item
+            = link_to '新規登録', new_user_registration_path, class: 'nav-link'
+          %li.nav-item
+            = link_to 'ログイン', new_user_session_path, class: 'nav-link'
