@@ -1,0 +1,21 @@
+%nav.navbar.navbar-expand-lg.bg-body-tertiary
+  .container-fluid
+    %a.navbar-brand{:href => "#"} さくらマーケット
+    %button.navbar-toggler{"data-bs-target" => "#navbarNavDropdown", "data-bs-toggle" => "collapse", :type => "button"}
+      %span.navbar-toggler-icon
+    #navbarNavDropdown.collapse.navbar-collapse
+      %ul.navbar-nav
+        %li.nav-item
+          %a.nav-link{:href => "#"} 商品一覧
+        %li.nav-item
+          %a.nav-link{:href => "#"} カートを見る
+        %li.nav-item.dropdown
+          %a.nav-link.dropdown-toggle{"data-bs-toggle" => "dropdown", :href => "#", :role => "button"}
+            ユーザー情報
+          %ul.dropdown-menu
+            %li
+              %a.dropdown-item{:href => "#"}
+            %li
+              %a.dropdown-item{:href => "#"} Another action
+            %li
+              %a.dropdown-item{:href => "#"} Something else here
