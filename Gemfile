@@ -19,10 +19,14 @@ gem 'turbo-rails'
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+group :development, :test do
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'rspec-rails'
+end
+
 group :test do
   gem 'capybara'
-  gem 'factory_bot_rails'
-  gem 'rspec-rails'
   gem 'selenium-webdriver'
 end
 
