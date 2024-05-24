@@ -10,6 +10,7 @@
       %dd= "¥ #{@product.price_with_tax}(税込)"
       %dd= "消費税: ¥ #{@product.tax}"
       %dd= "商品価格: ¥ #{@product.price}(税抜)"
+    = link_to '編集する', edit_admins_product_path(@product), class: 'btn btn-light border'
 
   .col-md-8
     = simple_format @product.description, sanitize: true
