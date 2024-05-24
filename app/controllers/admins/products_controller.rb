@@ -1,5 +1,6 @@
 class Admins::ProductsController < Admins::ApplicationController
   def index
+    @products = Product.default_order
   end
 
   def show
@@ -28,6 +29,6 @@ class Admins::ProductsController < Admins::ApplicationController
   private
 
   def product_params
-    params.require(:product).permit(:name, :price, :description, :published, :position)
+    params.require(:product).permit(:name, :price, :description, :published, :position, :image)
   end
 end

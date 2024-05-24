@@ -1,4 +1,8 @@
 = simple_form_for [:admins, product] do |f|
+  = f.input :image, as: :file, input_html: { accept: 'image/jpeg,image/png' }
+  - if product.image.attached? && product.image.persisted? # FIXME: 未保存の画像を表示しようとしてエラーになるため(https://github.com/rails/rails/issues/50234)
+    = image_tag product.image.variant(:thumb), class: 'products-form__img'
+    .mb-3.small= "現在のファイル: #{product.image.filename}"
   = f.input :name
   = f.input :price
   = f.input :description
