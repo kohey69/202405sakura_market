@@ -1,4 +1,5 @@
 class Admins::ProductsController < Admins::ApplicationController
+  before_action :set_product, only: %i[show edit update]
   def index
     @products = Product.default_order
   end
@@ -30,5 +31,9 @@ class Admins::ProductsController < Admins::ApplicationController
 
   def product_params
     params.require(:product).permit(:name, :price, :description, :published, :position, :image)
+  end
+
+  def set_product
+    @product = Product.find(params[:id])
   end
 end
