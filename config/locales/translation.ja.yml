@@ -9,6 +9,11 @@ ja:
       administrator:
         email: メールアドレス
         password: パスワード
+      user:
+        name: 氏名
+        email: メールアドレス
+        confirmed_at: メール認証
+        password: パスワード
       product:
         name: 商品名
         price: 販売価格
