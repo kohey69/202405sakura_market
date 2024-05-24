@@ -1,12 +1,12 @@
 %nav.navbar.navbar-expand-lg.bg-body-tertiary
   .container-fluid
-    %a.navbar-brand{:href => "#"} さくらマーケット
+    = link_to 'さくらマーケット', root_path, class: 'navbar-brand'
     %button.navbar-toggler{"data-bs-target" => "#navbarNavDropdown", "data-bs-toggle" => "collapse", :type => "button"}
       %span.navbar-toggler-icon
     #navbarNavDropdown.collapse.navbar-collapse
       %ul.navbar-nav
         %li.nav-item
-          %a.nav-link{:href => "#"} 商品一覧
+          = link_to '新規登録', new_user_registration_path, class: 'nav-link'
         %li.nav-item
           %a.nav-link{:href => "#"} カートを見る
         %li.nav-item.dropdown
