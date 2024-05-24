@@ -1,9 +1,4 @@
 ja:
-  activemodel:
-    attributes:
-      user_import:
-        file: ファイル
-
   activerecord:
     models:
       administrator: 管理者
@@ -11,6 +6,9 @@ ja:
       product: 商品
 
     attributes:
+      administrator:
+        email: メールアドレス
+        password: パスワード
       product:
         name: 商品名
         price: 販売価格
