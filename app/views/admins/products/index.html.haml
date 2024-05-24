@@ -9,7 +9,12 @@
         - else
           = image_tag 'no_image.png', class: 'card-img-top products-index__img'
         .card-body
-          %p.cart-title= product.name
+          .cart-title
+            = product.name
+            - if product.published?
+              %span.badge.text-bg-primary 公開
+            - else
+              %span.badge.text-bg-secondary 非公開
           %dl
             %dt 価格(税込)
             %dd= "¥#{product.price_with_tax}"
