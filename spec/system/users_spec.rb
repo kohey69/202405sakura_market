@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'ログイン', type: :system do
-  it '正常系' do
+  it '正しいパスワードのときはログインできること' do
     create(:user, email: 'kuma@test')
     visit new_user_session_path
 
@@ -11,7 +11,7 @@ RSpec.describe 'ログイン', type: :system do
     expect(page).to have_content 'ログインしました。'
   end
 
-  it '異常系' do
+  it '入力間違えのときはログインできないこと' do
     create(:user, email: 'kuma@test')
     visit new_user_session_path
 
