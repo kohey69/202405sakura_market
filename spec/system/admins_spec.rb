@@ -20,4 +20,17 @@ RSpec.describe '管理者', type: :system do
     click_on 'ログインする'
     expect(page).to have_content 'メールアドレスまたはパスワードが違います。'
   end
+
+  it '商品マスタを作成できること' do
+    admin = create(:administrator, email: 'kuma@test')
+    login_as admin, scope: :administrator
+    visit new_admins_product_path
+
+    fill_in 'product[name]', with: 'いちご'
+    fill_in 'product[price]', with: '100'
+    expect do
+      click_on '登録する'
+    end.to change(Product, :count).by(1)
+    expect(page).to have_content '新規登録しました'
+  end
 end
