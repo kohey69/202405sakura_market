@@ -7,9 +7,19 @@ RSpec.describe 'ユーザー管理', type: :system do
     login_as admin, scope: :administrator
     visit edit_admins_user_path(user)
 
-    fill_in 'user[email]', with: 'kuma@test'
-    click_on '更新する'
+    fill_in 'user[email]', with: 'kumagai@test'
+    expect do
+      click_on '更新する'
+    end.to change { ActionMailer::Base.deliveries.count }.by(1)
     expect(page).to have_content '更新しました'
-    expect(page).to have_current_path admins_users_path
+
+    mail = ActionMailer::Base.deliveries.last
+
+    aggregate_failures do
+      expect(mail.to).to eq ['kumagai@test']
+      expect(mail.from).to eq ['noreply@sakuramarket.jp']
+      expect(mail.subject).to eq 'アカウントの有効化について'
+      expect(mail.body).to match 'アカウントを有効化する'
+    end
   end
 end
