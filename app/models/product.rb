@@ -9,7 +9,7 @@ class Product < ApplicationRecord
   validates :price, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :image, presence: true
 
-  scope :default_order, -> { order(position: :asc, created_at: :desc) }
+  scope :default_order, -> { order(position: :asc, created_at: :id) }
   scope :published, -> { where(published: true) }
 
   def tax
