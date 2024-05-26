@@ -1,5 +1,6 @@
 class Admins::ProductsController < Admins::ApplicationController
   before_action :set_product, only: %i[show edit update]
+
   def index
     @products = Product.default_order
   end
