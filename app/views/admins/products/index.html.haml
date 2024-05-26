@@ -3,12 +3,12 @@
 .row
   - @products.each do |product|
     .col-md-4.mb-3
-      = link_to admins_product_path(product), class: 'products-index__product-link' do
+      = link_to admins_product_path(product), class: 'product__product-detail-link' do
         .card
           - if product.image.attached?
-            = image_tag product.image.variant(:thumb), class: 'card-img-top products-index__img'
+            = image_tag product.image.variant(:thumb), class: 'card-img-top product__product-card-image'
           - else
-            = image_tag 'no_image.png', class: 'card-img-top products-index__img'
+            = image_tag 'no_image.png', class: 'card-img-top product__product-card-image'
           .card-body
             .cart-title
               = product.name
@@ -18,9 +18,9 @@
                 %span.badge.text-bg-secondary 非公開
             %dl
               %dt 価格(税込)
-              %dd= "¥#{product.price_with_tax}"
+              %dd= number_to_currency product.price_with_tax
               %dt= Product.human_attribute_name(:price)
-              %dd= "¥#{product.price}"
+              %dd= number_to_currency product.price
               %dt 消費税額
-              %dd= "¥#{product.tax}"
+              %dd= number_to_currency product.tax
             %p.card-text= truncate(simple_format(product.description, sanitize: true), escape: false, length: 140)

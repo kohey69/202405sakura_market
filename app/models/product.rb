@@ -1,5 +1,5 @@
 class Product < ApplicationRecord
-  PRODUCT_TAX_RATE = 0.08
+  TAX_RATE = 0.08
 
   has_one_attached :image do |attachable|
     attachable.variant(:thumb, resize_to_fill: [300, 300])
@@ -7,12 +7,13 @@ class Product < ApplicationRecord
 
   validates :name, presence: true
   validates :price, presence: true, numericality: { only_integer: true, greater_than: 0 }
+  validates :image, presence: true
 
-  scope :default_order, -> { order(position: :asc, created_at: :desc) }
+  scope :default_order, -> { order(position: :asc, id: :desc) }
   scope :published, -> { where(published: true) }
 
   def tax
-    (self.price * PRODUCT_TAX_RATE).floor
+    (self.price * TAX_RATE).floor
   end
 
   def price_with_tax
