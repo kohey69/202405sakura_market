@@ -6,7 +6,6 @@ require_relative '../config/environment'
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
-# wardenを利用してlogin_asヘルパーを利用できるように
 include Warden::Test::Helpers
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -41,7 +40,7 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
-
+  config.file_fixture_path = Rails.root.join('spec/fixtures/files')
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
 

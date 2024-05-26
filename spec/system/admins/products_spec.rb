@@ -1,9 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe '商品', type: :system do
-  it '管理者は商品マスタを作成できること' do
+  before do
     admin = create(:administrator, email: 'kuma@test')
     login_as admin, scope: :administrator
+  end
+
+  it '管理者は商品マスタを作成できること' do
     visit new_admins_product_path
 
     fill_in 'product[name]', with: 'いちご'
@@ -15,11 +18,9 @@ RSpec.describe '商品', type: :system do
   end
 
   it '管理者の商品一覧ページには非公開の商品含め全て表示されていること' do
-    admin = create(:administrator)
     create(:product, name: 'いちご')
     create(:product, name: 'レモン')
     create(:product, :unpublished, name: 'バナナ')
-    login_as admin, scope: :administrator
     visit admins_products_path
 
     expect(page).to have_content 'いちご'
@@ -28,9 +29,7 @@ RSpec.describe '商品', type: :system do
   end
 
   it '管理者は商品の編集ができること' do
-    admin = create(:administrator)
     product = create(:product, name: 'いちご', price: '400', description: '甘い')
-    login_as admin, scope: :administrator
     visit edit_admins_product_path(product)
 
     expect(page).to have_content '商品情報の編集'
