@@ -15,6 +15,7 @@ ja:
         description: 商品説明
         published: 公開する
         position: 表示順
+        image: サムネイル画像
 
   views:
     back: 戻る

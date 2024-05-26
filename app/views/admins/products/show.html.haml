@@ -2,7 +2,7 @@
 .row
   .col-md-4
     - if @product.image.attached?
-      = image_tag @product.image, class: 'product__product-image'
+      = image_tag @product.image.variant(:thumb), class: 'product__product-image'
     - else
       = image_tag 'no_image.png', class: 'product__product-image'
     %dl
@@ -10,6 +10,7 @@
       %dd= "#{number_to_currency @product.price_with_tax}(税込)"
       %dd= "消費税: #{number_to_currency @product.tax}"
       %dd= "商品価格: #{number_to_currency @product.price}(税抜)"
+    = link_to '編集する', edit_admins_product_path(@product), class: 'btn btn-light border'
 
   .col-md-8
     = simple_format @product.description, sanitize: true

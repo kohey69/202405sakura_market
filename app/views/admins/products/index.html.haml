@@ -6,7 +6,7 @@
       = link_to admins_product_path(product), class: 'product__product-detail-link' do
         .card
           - if product.image.attached?
-            = image_tag product.image, class: 'card-img-top product__product-card-image'
+            = image_tag product.image.variant(:thumb), class: 'card-img-top product__product-card-image'
           - else
             = image_tag 'no_image.png', class: 'card-img-top product__product-card-image'
           .card-body
