@@ -1,5 +1,5 @@
 class Product < ApplicationRecord
-  PRODUCT_TAX_RATE = 0.08
+  TAX_RATE = 0.08
 
   has_one_attached :image do |attachable|
     attachable.variant(:thumb, resize_to_fill: [300, 300])
@@ -12,7 +12,7 @@ class Product < ApplicationRecord
   scope :published, -> { where(published: true) }
 
   def tax
-    (self.price * PRODUCT_TAX_RATE).floor
+    (self.price * TAX_RATE).floor
   end
 
   def price_with_tax
