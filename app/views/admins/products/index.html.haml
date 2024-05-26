@@ -1,2 +1,25 @@
-%h1 Admins::Products#index
-%p Find me in app/views/admins/products/index.html.haml
+%h1 商品一覧
+%p 商品マスタの一覧です。画像をクリックして商品情報を編集できます。
+.row
+  - @products.each do |product|
+    .col-md-4.mb-3
+      .card
+        - if product.image.attached?
+          = image_tag product.image, class: 'card-img-top products-index__img'
+        - else
+          = image_tag 'no_image.png', class: 'card-img-top products-index__img'
+        .card-body
+          .cart-title
+            = product.name
+            - if product.published?
+              %span.badge.text-bg-primary 公開
+            - else
+              %span.badge.text-bg-secondary 非公開
+          %dl
+            %dt 価格(税込)
+            %dd= "¥#{product.price_with_tax}"
+            %dt= Product.human_attribute_name(:price)
+            %dd= "¥#{product.price}"
+            %dt 消費税額
+            %dd= "¥#{product.tax}"
+          %p.card-text= product.description

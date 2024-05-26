@@ -28,6 +28,7 @@ RSpec.describe '管理者', type: :system do
 
     fill_in 'product[name]', with: 'いちご'
     fill_in 'product[price]', with: '100'
+    attach_file(file_fixture('images/strawberry.jpg'))
     expect do
       click_on '登録する'
     end.to change(Product, :count).by(1)
