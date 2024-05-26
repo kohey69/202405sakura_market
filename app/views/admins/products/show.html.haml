@@ -2,9 +2,9 @@
 .row
   .col-md-4
     - if @product.image.attached?
-      = image_tag @product.image, class: 'products-show__img'
+      = image_tag @product.image, class: 'product__product-image'
     - else
-      = image_tag 'no_image.png', class: 'products-show__img'
+      = image_tag 'no_image.png', class: 'product__product-image'
     %dl
       %dt= @product.name
       %dd= "¥ #{@product.price_with_tax}(税込)"
