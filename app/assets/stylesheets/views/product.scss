@@ -1,9 +1,19 @@
-.products-index__img {
+.product__product-card-image {
   height: 200px;
   object-fit: cover;
 }
 
-.products-form__img {
+.product__product-form-image {
   height: 200px;
   object-fit: cover;
+}
+
+.product__product-image {
+  width: 100%;
+  object-fit: cover;
+}
+
+.product__product-detail-link {
+  text-decoration: none;
+  color: #000;
 }
