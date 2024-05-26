@@ -7,9 +7,9 @@
       = image_tag 'no_image.png', class: 'product__product-image'
     %dl
       %dt= @product.name
-      %dd= "¥ #{@product.price_with_tax}(税込)"
-      %dd= "消費税: ¥ #{@product.tax}"
-      %dd= "商品価格: ¥ #{@product.price}(税抜)"
+      %dd= "#{number_to_currency @product.price_with_tax}(税込)"
+      %dd= "消費税: #{number_to_currency @product.tax}"
+      %dd= "商品価格: #{number_to_currency @product.price}(税抜)"
 
   .col-md-8
     = simple_format @product.description, sanitize: true

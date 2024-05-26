@@ -18,9 +18,9 @@
                 %span.badge.text-bg-secondary 非公開
             %dl
               %dt 価格(税込)
-              %dd= "¥#{product.price_with_tax}"
+              %dd= number_to_currency product.price_with_tax
               %dt= Product.human_attribute_name(:price)
-              %dd= "¥#{product.price}"
+              %dd= number_to_currency product.price
               %dt 消費税額
-              %dd= "¥#{product.tax}"
+              %dd= number_to_currency product.tax
             %p.card-text= truncate(simple_format(product.description, sanitize: true), escape: false, length: 140)
