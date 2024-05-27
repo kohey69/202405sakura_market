@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     confirmations: 'admins/devise/confirmations',
   }
 
+  resources :products, only: %i[index show]
   root 'home#index'
 
   namespace :admins do
