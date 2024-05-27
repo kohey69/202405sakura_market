@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'ユーザー管理', type: :system do
-  it 'メールアドレスがパスワードなしで変更できること' do
+  it 'emailを変更するとアカウント有効化のメールが送信されること' do
     user = create(:user, email: 'kuma@test')
     admin = create(:administrator)
     login_as admin, scope: :administrator
@@ -15,11 +15,9 @@ RSpec.describe 'ユーザー管理', type: :system do
 
     mail = ActionMailer::Base.deliveries.last
 
-    aggregate_failures do
-      expect(mail.to).to eq ['kumagai@test']
-      expect(mail.from).to eq ['noreply@sakuramarket.jp']
-      expect(mail.subject).to eq 'アカウントの有効化について'
-      expect(mail.body).to match 'アカウントを有効化する'
-    end
+    expect(mail.to).to eq ['kumagai@test']
+    expect(mail.from).to eq ['noreply@sakuramarket.jp']
+    expect(mail.subject).to eq 'アカウントの有効化について'
+    expect(mail.body).to match 'アカウントを有効化する'
   end
 end
