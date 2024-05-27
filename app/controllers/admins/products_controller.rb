@@ -27,7 +27,12 @@ class Admins::ProductsController < Admins::ApplicationController
 
   def update
     if @product.update(product_params)
-      redirect_to admins_product_path(@product), notice: t('controllers.updated')
+      respond_to do |format|
+        format.html { redirect_to admins_product_path(@product), notice: t('controllers.updated') }
+        format.json do
+          head :ok
+        end
+      end
     else
       flash.now[:alert] = t('controllers.failed')
       render :edit, status: :unprocessable_entity
