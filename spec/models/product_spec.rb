@@ -1,6 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe Product, type: :model do
+  describe '#published' do
+    it '公開中の商品のARオブジェクトが返されること' do
+      create(:product, published: true, name: '公開中の商品')
+      create(:product, :unpublished, name: '非公開の商品')
+
+      expect(Product.published.pluck(:name)).to contain_exactly('公開中の商品')
+    end
+  end
+
   describe '#tax' do
     it '税率が8%で小数点以下の金額が切り捨てられていること' do
       product = create(:product, price: '110')
