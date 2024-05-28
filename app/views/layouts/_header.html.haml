@@ -7,7 +7,7 @@
       %ul.navbar-nav
         - if user_signed_in?
           %li.nav-item
-          = link_to '商品一覧', products_path, class: 'nav-link'
+            = link_to '商品一覧', products_path, class: 'nav-link'
           %li.nav-item
             = link_to 'カートを見る', '#', class: 'nav-link'
           %li.nav-item.dropdown
@@ -16,10 +16,17 @@
               %li
                 %a.dropdown-item{:href => "#"} 購入履歴
               %li
-                %a.dropdown-item{:href => "#"} 配送先
+                - if user_signed_in? && current_user.address.present?
+                  = link_to '配送先', address_path, class: 'dropdown-item'
+                - else
+                  = link_to '配送先住所の登録', new_address_path, class: 'dropdown-item'
               %li
                 = link_to 'ログアウト', destroy_user_session_path, class: 'dropdown-item', data: { turbo_method: :delete }
         - else
+          %li.nav-item
+            = link_to '商品一覧', products_path, class: 'nav-link'
+          %li.nav-item
+            = link_to 'カートを見る', '#', class: 'nav-link'
           %li.nav-item
             = link_to '新規登録', new_user_registration_path, class: 'nav-link'
           %li.nav-item

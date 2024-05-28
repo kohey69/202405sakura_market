@@ -12,7 +12,7 @@ class AddressesController < ApplicationController
   def create
     @address = current_user.build_address(address_params)
     if @address.save
-      redirect_to address_path(@address), notice: t('controllers.created')
+      redirect_to address_path, notice: t('controllers.created')
     else
       flash.now[:alert] = t('controllers.failed')
       render 'new', status: :unprocessable_entity
@@ -23,6 +23,12 @@ class AddressesController < ApplicationController
   end
 
   def update
+    if @address.update(address_params)
+      redirect_to address_path, notice: t('controllers.updated')
+    else
+      flash.now[:alert] = t('controllers.failed')
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private
