@@ -1,5 +1,6 @@
 class AddressesController < ApplicationController
   before_action :authenticate_user!
+  before_action :redirect_edit_if_present, only: :new
   before_action :set_address, only: %i[show edit update]
 
   def show
@@ -32,6 +33,10 @@ class AddressesController < ApplicationController
   end
 
   private
+
+  def redirect_edit_if_present
+    redirect_to address_path if current_user.address.present?
+  end
 
   def set_address
     @address = current_user.address
