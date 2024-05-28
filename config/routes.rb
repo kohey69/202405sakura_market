@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   }
 
   resources :products, only: %i[index show]
+  resource :address, only: %i[show new create edit update]
   root 'home#index'
 
   namespace :admins do

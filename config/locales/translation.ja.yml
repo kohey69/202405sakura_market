@@ -4,6 +4,7 @@ ja:
       administrator: 管理者
       user: ユーザー
       product: 商品
+      address: 送付先住所
 
     attributes:
       administrator:
@@ -21,6 +22,13 @@ ja:
         published: 公開する
         position: 表示順
         image: サムネイル画像
+      address:
+        name: 宛名
+        postal_code: 郵便番号
+        prefecture: 都道府県
+        city: 市区町村
+        other_address: その他住所
+        phone_number: 連絡先電話番号
 
   views:
     back: 戻る
