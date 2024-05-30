@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'cart_items/index'
   devise_for :users, controllers: {
     registrations: 'users/registrations',
     sessions: 'users/sessions',
@@ -11,7 +12,9 @@ Rails.application.routes.draw do
     confirmations: 'admins/devise/confirmations',
   }
 
-  resources :products, only: %i[index show]
+  resources :products, only: %i[index show] do
+    resources :cart_items, only: %i[create update destroy]
+  end
   resource :address, only: %i[show new create edit update]
   root 'home#index'
 

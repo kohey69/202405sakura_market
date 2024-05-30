@@ -1,7 +1,7 @@
 %h1= @product.name
 %p= "#{@product.name}の商品紹介ページ"
 .row
-  .col-md-4
+  .col-md-3
     = image_tag @product.image.variant(:thumb), class: 'product__product-image'
     %dl
       %dt= @product.name
@@ -9,5 +9,20 @@
       %dd= "消費税: #{number_to_currency @product.tax}"
       %dd= "商品価格: #{number_to_currency @product.price}(税抜)"
 
-  .col-md-8
+  .col-md-6
     = simple_format @product.description, sanitize: true
+
+  .col-md-3.bg-light.p-4.h-100
+    .fw-bold カートに追加する
+    %ul.cart_item__list.list-group
+      - current_cart.cart_items.where.not(id: nil).each do |cart_item|
+        %li.list-group-item.d-flex.justify-content-between.align-items-center
+          = cart_item.product.name
+          %span.badge.bg-primary.rounded-pill= cart_item.quantity
+    .cart_item__form
+      = simple_form_for [@product, @cart_item], url: @cart_item.new_record? ? nil : product_cart_item_path(@product) do |f|
+        = f.input :product_id, as: :hidden, input_html: { value: @product.id }
+        = f.input :quantity
+        = f.button :button, class: 'btn btn-secondary' do
+          %i.bi.bi-cart-check
+          カートに入れる
