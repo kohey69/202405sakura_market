@@ -9,4 +9,10 @@ class User < ApplicationRecord
   validates :name, presence: true
 
   scope :default_order, -> { order(id: :asc) }
+
+  after_create :create_user_cart
+
+  def create_user_cart
+    self.create_cart!
+  end
 end
