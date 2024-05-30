@@ -5,6 +5,7 @@ class CartItemsController < ApplicationController
       redirect_to product_path(@cart_item.product), notice: t('controllers.created')
     else
       flash[:alert] = t('controllers.failed')
+      @product = @cart_item.product # products/show再レンダリングするため
       render 'products/show', status: :unprocessable_entity
     end
   end
@@ -15,6 +16,7 @@ class CartItemsController < ApplicationController
       redirect_to product_path(@cart_item.product), notice: t('controllers.updated')
     else
       flash[:alert] = t('controllers.failed')
+      @product = @cart_item.product # products/show再レンダリングするため
       render 'products/show', status: :unprocessable_entity
     end
   end
