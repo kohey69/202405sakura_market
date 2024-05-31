@@ -10,9 +10,5 @@ class User < ApplicationRecord
 
   scope :default_order, -> { order(id: :asc) }
 
-  after_create :create_user_cart
-
-  def create_user_cart
-    self.create_cart!
-  end
+  after_create :create_cart!
 end
