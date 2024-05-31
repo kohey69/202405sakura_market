@@ -1,11 +1,12 @@
 class CartItemsController < ApplicationController
+  before_action :set_product, only: %i[create update]
+
   def create
     @cart_item = current_cart.cart_items.build(cart_item_params)
     if @cart_item.save
       redirect_to product_path(@cart_item.product), notice: t('controllers.created')
     else
       flash[:alert] = t('controllers.failed')
-      @product = @cart_item.product # products/show再レンダリングするため
       render 'products/show', status: :unprocessable_entity
     end
   end
@@ -16,12 +17,15 @@ class CartItemsController < ApplicationController
       redirect_to product_path(@cart_item.product), notice: t('controllers.updated')
     else
       flash[:alert] = t('controllers.failed')
-      @product = @cart_item.product # products/show再レンダリングするため
       render 'products/show', status: :unprocessable_entity
     end
   end
 
   private
+
+  def set_product
+    @product = Product.find(params[:product_id])
+  end
 
   def cart_item_params
     params.require(:cart_item).permit(:quantity, :product_id)
