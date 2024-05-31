@@ -1,10 +1,11 @@
 %h1 商品一覧
 %p 商品マスタの一覧です。画像をクリックして商品情報を編集できます。
-.row
+%ul.product__list.row{ data: { controller: 'sortable', sortable_resource_name_value: 'product' } }
   - @products.each do |product|
-    .col-md-4.mb-3
+    %li.col-md-4{ data: { sortable_update_url: admins_product_path(product, format: :json) } }
       = link_to admins_product_path(product), class: 'product__product-detail-link' do
         .card
+          .handle.bi.bi-arrow-left-right.btn.btn-light
           - if product.image.attached?
             = image_tag product.image.variant(:thumb), class: 'card-img-top product__product-card-image'
           - else

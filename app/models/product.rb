@@ -1,6 +1,8 @@
 class Product < ApplicationRecord
   TAX_RATE = 0.08
 
+  acts_as_list
+
   has_one_attached :image do |attachable|
     attachable.variant(:thumb, resize_to_fill: [300, 300])
   end
