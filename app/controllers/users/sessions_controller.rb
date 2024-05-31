@@ -24,4 +24,19 @@ class Users::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
+
+  def after_sign_in_path_for(resource)
+    merge_guest_user_cart!
+    session[:cart_id] = nil
+    root_path
+  end
+
+  private
+
+  def merge_guest_user_cart!
+    session_cart = Cart.find(session[:cart_id])
+    return if session_cart.blank?
+
+    current_user.cart.transfer_cart_items_from!(session_cart)
+  end
 end
