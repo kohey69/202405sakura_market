@@ -29,9 +29,7 @@ class Admins::ProductsController < Admins::ApplicationController
     if @product.update(product_params)
       respond_to do |format|
         format.html { redirect_to admins_product_path(@product), notice: t('controllers.updated') }
-        format.json do
-          head :ok
-        end
+        format.json { head :ok }
       end
     else
       flash.now[:alert] = t('controllers.failed')
