@@ -4,7 +4,7 @@ class Product < ApplicationRecord
   acts_as_list
 
   has_one_attached :image do |attachable|
-    attachable.variant(:thumb, resize_to_fill: [300, 300])
+    attachable.variant(:thumb, resize_to_fill: [600, 600])
   end
 
   validates :name, presence: true
