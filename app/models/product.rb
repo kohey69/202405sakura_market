@@ -7,7 +7,7 @@ class Product < ApplicationRecord
     attachable.variant(:thumb, resize_to_fill: [600, 600])
   end
 
-  has_many :cart_items
+  has_many :cart_items, dependent: :destroy
 
   validates :name, presence: true
   validates :price, presence: true, numericality: { only_integer: true, greater_than: 0 }
