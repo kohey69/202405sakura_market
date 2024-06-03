@@ -12,12 +12,22 @@
   .col-md-6
     = simple_format @product.description, sanitize: true
 
+  - cart_items = current_cart.cart_items.default_order
   .col-md-3.bg-light.p-4.h-100
-    .fw-bold カートに追加する
+    .cart_item__details
+      - if cart_items.present?
+        %dl.p-3
+          %dt.mb-1 カートの合計金額
+          %dd= "支払い総額(税込): ¥#{current_cart.total_payment}"
+          %dd.text-muted= "商品合計(税抜): ¥#{current_cart.total_price}"
+          %dd.text-muted= "消費税合計: ¥#{current_cart.total_tax}"
+          %dd.text-muted= "代引き手数料: ¥#{current_cart.cod_fee}"
+          %dd.text-muted= "配送手数料: ¥#{current_cart.shipping_fee}"
     %ul.cart_item__list.list-group
-      - current_cart.cart_items.where.not(id: nil).each do |cart_item|
+      - cart_items.each do |cart_item|
         %li.list-group-item.d-flex.justify-content-between.align-items-center
-          = cart_item.product.name
+          .fw-bolder= cart_item.product.name
+          .fw-light= "¥#{cart_item.price}(税抜)"
           .cart-item__list-links
             %span.badge.bg-primary.rounded-pill= cart_item.quantity
             = link_to product_cart_item_path(@product, cart_item), class: 'btn btn-sm btn-danger', data: { turbo_method: :delete } do
