@@ -1,5 +1,6 @@
 class CartItemsController < ApplicationController
-  before_action :set_product, only: %i[create update]
+  before_action :set_product, only: %i[create update destroy]
+  before_action :set_cart_item, only: %i[update destroy]
 
   def create
     @cart_item = current_cart.cart_items.build(cart_item_params)
@@ -12,7 +13,6 @@ class CartItemsController < ApplicationController
   end
 
   def update
-    @cart_item = current_cart.cart_items.find_by!(product_id: params[:id])
     if @cart_item.update(cart_item_params)
       redirect_to product_path(@cart_item.product), notice: t('controllers.updated')
     else
@@ -21,10 +21,19 @@ class CartItemsController < ApplicationController
     end
   end
 
+  def destroy
+    @cart_item.destroy!
+    redirect_to product_path(@cart_item.product), notice: t('controllers.destroyed')
+  end
+
   private
 
   def set_product
     @product = Product.find(params[:product_id])
+  end
+
+  def set_cart_item
+    @cart_item = current_cart.cart_items.find(params[:id])
   end
 
   def cart_item_params
