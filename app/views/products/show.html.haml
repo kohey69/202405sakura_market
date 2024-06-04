@@ -15,14 +15,13 @@
   - cart_items = current_cart.cart_items.default_order
   .col-md-3.bg-light.p-4.h-100
     .cart_item__details
-      - if cart_items.present?
-        %dl.p-3
-          %dt.mb-1 カートの合計金額
-          %dd= "支払い総額(税込): ¥#{current_cart.total_payment}"
-          %dd.text-muted= "商品合計(税抜): ¥#{current_cart.total_price}"
-          %dd.text-muted= "消費税合計: ¥#{current_cart.total_tax}"
-          %dd.text-muted= "代引き手数料: ¥#{current_cart.cod_fee}"
-          %dd.text-muted= "配送手数料: ¥#{current_cart.shipping_fee}"
+      %dl.p-3
+        %dt.mb-1 カートの合計金額
+        %dd= "支払い総額(税込): ¥#{current_cart.total_payment}"
+        %dd.text-muted= "商品合計(税抜): ¥#{current_cart.total_price}"
+        %dd.text-muted= "消費税合計: ¥#{current_cart.total_tax}"
+        %dd.text-muted= "代引き手数料: ¥#{current_cart.cod_fee}"
+        %dd.text-muted= "配送手数料: ¥#{current_cart.shipping_fee}"
     %ul.cart_item__list.list-group
       - cart_items.each do |cart_item|
         %li.list-group-item.d-flex.justify-content-between.align-items-center
