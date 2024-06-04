@@ -5,6 +5,7 @@ class User < ApplicationRecord
 
   has_one :address, dependent: :destroy
   has_one :cart, dependent: :destroy
+  has_many :purchases, dependent: :destroy
 
   validates :name, presence: true
 

@@ -1,0 +1,26 @@
+.p-5
+  .purchases__cart-detail.mb-5
+    %h1 購入情報
+    %h2 商品情報
+    %hr
+    %ul
+      - current_cart.cart_items.each do |cart_item|
+        %li.d-flex.gap-4.border-bottom
+          = image_tag cart_item.product.image.variant(:thumb), class: 'purchases__product-image'
+          .cart__product_detail
+            = cart_item.product.name
+            = truncate(simple_format(cart_item.product.description, sanitize: true), escape: false, length: 100)
+          .cart__product-price= "単価(税込): ¥#{cart_item.product.price}"
+          .cart__cart-item-quantity= "数量: #{cart_item.quantity}個"
+    %hr
+    .float-end.fw-bold= "支払い総額(税込): ¥#{current_cart.total_payment}"
+  .purchases__form.p-3.mb-3
+    %h2 配送先住所
+    = simple_form_for @purchase, local: true, data: { turbo: false }, url: confirm_purchases_path do |f|
+      = f.input :address_name
+      = f.input :postal_code
+      = f.input :prefecture, as: :select, collection: JpPrefecture::Prefecture.all.map(&:name)
+      = f.input :city, placeholder: '〇〇市△△区××町'
+      = f.input :other_address, placeholder: '〇〇-△△ ××マンション101号'
+      = f.input :phone_number, placeholder: '090-〇〇〇〇-××××'
+      = f.button :submit, '購入情報の確定へ'

@@ -7,6 +7,7 @@ ja:
       address: 送付先住所
       cart: カート
       cart_item: カート内の商品
+      purchase: 購入
 
     attributes:
       administrator:
@@ -33,6 +34,13 @@ ja:
         phone_number: 連絡先電話番号
       cart_item:
         quantity: 数量
+      purchase:
+        address_name: 宛名
+        postal_code: 郵便番号
+        prefecture: 都道府県
+        city: 市区町村
+        other_address: その他住所
+        phone_number: 連絡先電話番号
 
   views:
     back: 戻る

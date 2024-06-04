@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_30_062034) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_04_013816) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -90,6 +90,35 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_30_062034) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "purchase_items", force: :cascade do |t|
+    t.bigint "purchase_id", null: false
+    t.bigint "product_id", null: false
+    t.integer "quantity", null: false
+    t.string "product_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_purchase_items_on_product_id"
+    t.index ["purchase_id", "product_id"], name: "index_purchase_items_on_purchase_id_and_product_id", unique: true
+  end
+
+  create_table "purchases", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "total_payment", null: false, comment: "支払い総額(税込)"
+    t.integer "total_price", null: false, comment: "合計(税抜)"
+    t.integer "total_tax", null: false, comment: "消費税額"
+    t.integer "cod_fee", null: false, comment: "代引き手数料"
+    t.integer "shipping_fee", null: false, comment: "配送手数料"
+    t.string "address_name", default: "", null: false, comment: "宛名"
+    t.string "postal_code", default: "", null: false
+    t.string "prefecture", null: false
+    t.string "city", null: false
+    t.string "other_address", null: false, comment: "丁目・番地・建物名"
+    t.string "phone_number", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_purchases_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "email", default: "", null: false
@@ -110,4 +139,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_30_062034) do
   add_foreign_key "cart_items", "carts"
   add_foreign_key "cart_items", "products"
   add_foreign_key "carts", "users"
+  add_foreign_key "purchase_items", "products"
+  add_foreign_key "purchase_items", "purchases"
+  add_foreign_key "purchases", "users"
 end
