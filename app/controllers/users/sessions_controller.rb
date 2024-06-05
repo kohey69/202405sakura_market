@@ -9,9 +9,15 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    super
+
+    guest_user_cart = Cart.find_by(id: session[:cart_id])
+    if user_signed_in? && guest_user_cart.present?
+      guest_user_cart.destroy_with_transfer_cart_items_to!(current_user.cart)
+      session[:cart_id] = nil
+    end
+  end
 
   # DELETE /resource/sign_out
   # def destroy
@@ -24,19 +30,4 @@ class Users::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
-
-  def after_sign_in_path_for(resource)
-    merge_guest_user_cart!
-    session[:cart_id] = nil
-    root_path
-  end
-
-  private
-
-  def merge_guest_user_cart!
-    session_cart = Cart.find(session[:cart_id])
-    return if session_cart.blank?
-
-    current_user.cart.transfer_cart_items_from!(session_cart)
-  end
 end
