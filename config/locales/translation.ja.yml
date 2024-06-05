@@ -5,6 +5,8 @@ ja:
       user: ユーザー
       product: 商品
       address: 送付先住所
+      cart: カート
+      cart_item: カート内の商品
 
     attributes:
       administrator:
@@ -29,6 +31,8 @@ ja:
         city: 市区町村
         other_address: その他住所
         phone_number: 連絡先電話番号
+      cart_item:
+        quantity: 数量
 
   views:
     back: 戻る
