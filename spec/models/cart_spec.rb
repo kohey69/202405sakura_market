@@ -1,48 +1,38 @@
 require 'rails_helper'
 
 RSpec.describe Cart, type: :model do
-  describe '#transfer_cart_items_from!' do
-    let(:db_cart) { create(:cart) }
-    let(:session_cart) { create(:cart) }
+  describe '#destroy_with_transfer_cart_items_to!' do
+    let(:original_cart) { create(:cart) }
+    let(:destination_cart) { create(:cart) }
     let(:product) { create(:product, name: 'いちご') }
     let(:other_product) { create(:product, name: 'バナナ') }
     let(:duplicated_product) { create(:product, name: 'りんご') }
 
-    context 'sessionのカートとDBのカートの両方にアイテムが存在する時' do
-      it '重複するアイテムがない時、sessionとDBのアイテムが同じカートに入れられること' do
-        cart_item1 = create(:cart_item, :with_cart, :with_product, product:, cart: db_cart)
-        cart_item2 = create(:cart_item, :with_cart, :with_product, product: other_product, cart: session_cart)
-        db_cart.transfer_cart_items_from!(session_cart)
+    context '移行先のカートに重複する商品のアイテムが入っていない時' do
+      it '移行先のカートに移行元と同じ商品のアイテムが作成され、移行元のカートは削除されること' do
+        create(:cart_item, :with_cart, :with_product, product:, cart: original_cart)
+        create(:cart_item, :with_cart, :with_product, product: other_product, cart: destination_cart)
+        original_cart.destroy_with_transfer_cart_items_to!(destination_cart)
 
-        expect(db_cart.reload.cart_items).to contain_exactly(cart_item1, cart_item2)
-      end
-
-      it '重複するアイテムがある時、DBのアイテムのみがカートに保存されること' do
-        cart_item1 = create(:cart_item, :with_cart, :with_product, product:, cart: db_cart)
-        cart_item2 = create(:cart_item, :with_cart, :with_product, product: duplicated_product, cart: db_cart)
-        cart_item3 = create(:cart_item, :with_cart, :with_product, product: other_product, cart: session_cart)
-        _cart_item4 = create(:cart_item, :with_cart, :with_product, product: duplicated_product, cart: session_cart)
-        db_cart.transfer_cart_items_from!(session_cart)
-
-        expect(db_cart.reload.cart_items).to contain_exactly(cart_item1, cart_item2, cart_item3)
+        expect(CartItem.count).to eq 2
+        expect(destination_cart.reload.cart_items.pluck(:product_id)).to contain_exactly(product.id, other_product.id)
+        expect(original_cart.destroyed?).to eq true
       end
     end
-  end
 
-  describe '#destroy_duplicated_cart_items!' do
-    it '重複するアイテムのみ削除されること' do
-      product = create(:product, name: 'いちご')
-      duplicated_product = create(:product, name: 'バナナ')
-      other_product = create(:product, name: 'りんご')
-      db_cart = create(:cart)
-      session_cart = create(:cart)
-      cart_item1 = create(:cart_item, :with_cart, :with_product, product:, cart: db_cart)
-      cart_item2 = create(:cart_item, :with_cart, :with_product, product: duplicated_product, cart: db_cart)
-      cart_item3 = create(:cart_item, :with_cart, :with_product, product: other_product, cart: session_cart)
-      _cart_item4 = create(:cart_item, :with_cart, :with_product, product: duplicated_product, cart: session_cart)
-      db_cart.destroy_duplicated_cart_items!(session_cart)
+    context '移行先のカートに重複する商品のアイテムが入っている時' do
+      it '移行先のカートに移行元と同じ商品のアイテムは移行先そのまま残っていること' do
+        create(:cart_item, :with_cart, :with_product, product:, quantity: 1, cart: original_cart)
+        create(:cart_item, :with_cart, :with_product, product: duplicated_product, quantity: 2, cart: original_cart)
+        create(:cart_item, :with_cart, :with_product, product: other_product, quantity: 3, cart: destination_cart)
+        create(:cart_item, :with_cart, :with_product, product: duplicated_product, quantity: 4, cart: destination_cart)
+        original_cart.destroy_with_transfer_cart_items_to!(destination_cart)
 
-      expect(CartItem.pluck(:id)).to contain_exactly(cart_item1.id, cart_item2.id, cart_item3.id)
+        expect(CartItem.count).to eq 3
+        expect(destination_cart.reload.cart_items.pluck(:product_id)).to contain_exactly(product.id, duplicated_product.id, other_product.id)
+        expect(destination_cart.cart_items.pluck(:quantity)).to contain_exactly(1, 3, 4)
+        expect(original_cart.destroyed?).to eq true
+      end
     end
   end
 end
