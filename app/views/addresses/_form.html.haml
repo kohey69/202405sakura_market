@@ -1,0 +1,8 @@
+= simple_form_for @address, url: address_path do |f|
+  = f.input :name
+  = f.input :postal_code
+  = f.input :prefecture, as: :select, collection: JpPrefecture::Prefecture.all.map(&:name)
+  = f.input :city, placeholder: '〇〇市△△区××町'
+  = f.input :other_address, placeholder: '〇〇-△△ ××マンション101号'
+  = f.input :phone_number, placeholder: '090-〇〇〇〇-××××'
+  = f.button :submit

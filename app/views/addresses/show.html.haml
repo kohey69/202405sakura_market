@@ -1,0 +1,18 @@
+%h1 あなたの住所情報
+.p-5.mb-4.bg-body-tertiary.rounded-3
+  .container-fluid.py-5
+    %h1.fw-bold 現在登録されている住所
+    %dl
+      %dt= Address.human_attribute_name(:name)
+      %dd= @address.name
+      %dt= Address.human_attribute_name(:postal_code)
+      %dd= "郵便番号: #{@address.postal_code}"
+      %dt= Address.human_attribute_name(:prefecture)
+      %dd= @address.prefecture
+      %dt= Address.human_attribute_name(:city)
+      %dd= @address.city
+      %dt= Address.human_attribute_name(:other_address)
+      %dd= @address.other_address
+      %dt= Address.human_attribute_name(:phone_number)
+      %dd= @address.phone_number
+    = link_to '編集', edit_address_path, class: 'btn btn-primary'

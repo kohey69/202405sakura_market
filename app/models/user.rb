@@ -3,6 +3,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :validatable, :confirmable
 
+  has_one :address, dependent: :destroy
+
   validates :name, presence: true
 
   scope :default_order, -> { order(id: :asc) }
