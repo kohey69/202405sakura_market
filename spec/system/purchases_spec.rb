@@ -18,7 +18,7 @@ RSpec.describe 'Purchases', type: :system do
 
     fill_in 'purchase[address_name]', with: '田中 太郎'
     fill_in 'purchase[postal_code]', with: 'xxx-xxxx'
-    fill_in 'purchase[prefecture]', with: '兵庫県'
+    select '兵庫県', from: 'purchase[prefecture]'
     fill_in 'purchase[city]', with: '神戸市中央区雲井通'
     fill_in 'purchase[other_address]', with: 'x丁目xx-xx'
     fill_in 'purchase[phone_number]', with: 'xxx-xxxx-xxxx'
