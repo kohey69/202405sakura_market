@@ -5,6 +5,5 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.published.find(params[:id])
-    @cart_item = @product.cart_items.find_or_initialize_by(cart_id: current_cart.id) # cartからcart_itemをbuildするとカートに未保存のcart_itemが金額に加算されるので
   end
 end

@@ -4,11 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :validatable, :confirmable
 
   has_one :address, dependent: :destroy
-  has_one :cart, dependent: :destroy
 
   validates :name, presence: true
 
   scope :default_order, -> { order(id: :asc) }
-
-  after_create :create_cart!
 end

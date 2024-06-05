@@ -11,9 +11,7 @@ Rails.application.routes.draw do
     confirmations: 'admins/devise/confirmations',
   }
 
-  resources :products, only: %i[index show] do
-    resources :cart_items, only: %i[create update destroy]
-  end
+  resources :products, only: %i[index show]
   resource :address, only: %i[show new create edit update]
   root 'home#index'
 
