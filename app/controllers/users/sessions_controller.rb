@@ -9,9 +9,17 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  def create
+    super
+
+    return unless user_signed_in?
+
+    guest_user_cart = Cart.find_by(id: session[:cart_id])
+    if guest_user_cart.present?
+      guest_user_cart.destroy_with_transfer_cart_items_to!(current_user.cart)
+    end
+    session[:cart_id] = nil
+  end
 
   # DELETE /resource/sign_out
   # def destroy
