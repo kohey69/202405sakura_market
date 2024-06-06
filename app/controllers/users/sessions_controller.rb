@@ -12,11 +12,13 @@ class Users::SessionsController < Devise::SessionsController
   def create
     super
 
+    return unless user_signed_in?
+
     guest_user_cart = Cart.find_by(id: session[:cart_id])
-    if user_signed_in? && guest_user_cart.present?
+    if guest_user_cart.present?
       guest_user_cart.destroy_with_transfer_cart_items_to!(current_user.cart)
-      session[:cart_id] = nil
     end
+    session[:cart_id] = nil
   end
 
   # DELETE /resource/sign_out
