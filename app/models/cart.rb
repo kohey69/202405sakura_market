@@ -8,18 +8,16 @@ class Cart < ApplicationRecord
 
   validates :user_id, uniqueness: true, allow_nil: true
 
-  def transfer_cart_items_from!(session_cart)
+  def destroy_with_transfer_cart_items_to!(destination_cart)
     transaction do
-      if cart_items.present?
-        destroy_duplicated_cart_items!(session_cart)
+      product_ids = destination_cart.cart_items.select(:product_id)
+      cart_items.where.not(product_id: product_ids).find_each do |cart_item|
+        copy_item = cart_item.dup
+        copy_item.cart_id = destination_cart.id
+        copy_item.save!
       end
-      session_cart.cart_items.each { |cart_item| cart_item.update!(cart_id: id) }
+      self.destroy!
     end
-  end
-
-  def destroy_duplicated_cart_items!(session_cart)
-    cart_item_product_ids = cart_items.select(:product_id)
-    session_cart.cart_items.where(product_id: cart_item_product_ids).find_each(&:destroy!)
   end
 
   def total_payment
