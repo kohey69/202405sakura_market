@@ -1,5 +1,5 @@
 class CartItemsController < ApplicationController
-  before_action :set_product, only: %i[create update destroy]
+  before_action :set_product, only: %i[create update]
   before_action :set_cart_item, only: %i[update destroy]
 
   def create
