@@ -10,18 +10,11 @@
             .cart__product_detail
               = cart_item.product.name
               = truncate(simple_format(cart_item.product.description, sanitize: true), escape: false, length: 100)
-            .cart__product_price= "単価(税込): ¥#{cart_item.product.price}"
+            .cart__product_price= "単価(税込): #{number_to_currency cart_item.product.price}"
       - else
         .text-muted カート内に商品がありません
     %hr
-    .float-end= "支払い総額(税込): ¥#{current_cart.total_payment}"
+    .float-end= "支払い総額(税込): #{number_to_currency current_cart.total_payment}"
   .col-lg-3.bg-light.p-4.h-100
-    .cart_item__details
-      %dl.p-3
-        %dt.mb-1 カートの合計金額
-        %dd= "支払い総額(税込): ¥#{current_cart.total_payment}"
-        %dd.text-muted= "商品合計(税抜): ¥#{current_cart.total_price}"
-        %dd.text-muted= "消費税合計: ¥#{current_cart.total_tax}"
-        %dd.text-muted= "代引き手数料: ¥#{current_cart.cod_fee}"
-        %dd.text-muted= "配送手数料: ¥#{current_cart.shipping_fee}"
+    = render 'carts/cart_price_details'
     = link_to '購入手続へ', new_purchase_path, class: 'btn btn-primary'

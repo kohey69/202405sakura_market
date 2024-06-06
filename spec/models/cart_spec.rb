@@ -40,7 +40,7 @@ RSpec.describe Cart, type: :model do
     let(:cart) { create(:cart) }
 
     context '商品数0・商品合計金額0の時' do
-      it '正しい金額を返すこと' do
+      it '金額は全て0を返すこと' do
         expect(cart.total_price).to eq  0
         expect(cart.shipping_fee).to eq 0
         expect(cart.cod_fee).to eq 0
@@ -61,7 +61,7 @@ RSpec.describe Cart, type: :model do
         create(:cart_item, product: product4, cart:, quantity: 6)
       end
 
-      it '正しい金額を返すこと' do
+      it '商品合計額は9999、消費税額は商品8%+手数料10%で合算した値、送料は商品数1~4の時の値、代引き手数料が商品合計額1~9999円の時の値、支払い総額は全てを合算した値を返すこと' do
         expect(cart.total_price).to eq 9999
         expect(cart.shipping_fee).to eq 600
         expect(cart.cod_fee).to eq 300
@@ -84,7 +84,7 @@ RSpec.describe Cart, type: :model do
         create(:cart_item, product: product5, cart:, quantity: 6)
       end
 
-      it '正しい金額を返すこと' do
+      it '商品合計額は10000、消費税額は商品8%+手数料10%で合算した値、送料は商品数5~9の時の値、代引き手数料が商品合計額10000~29999円の時の値、支払い総額は全てを合算した値を返すこと' do
         expect(cart.total_price).to eq 10000
         expect(cart.shipping_fee).to eq 1200
         expect(cart.cod_fee).to eq 400

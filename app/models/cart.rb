@@ -1,6 +1,6 @@
 class Cart < ApplicationRecord
-  SHIPPING_FEE_PER_PRODUCT_COUNT = 600
-  PRODUCT_COUNT = 5
+  SHIPPING_FEE_PER_PRODUCTS_SET = 600
+  PRODUCTS_SET_SIZE = 5
   FEE_TAX_RATE = 0.1
 
   belongs_to :user, optional: true
@@ -48,8 +48,8 @@ class Cart < ApplicationRecord
   end
 
   def shipping_fee
-    return 0 if cart_items.count == 0
+    return 0 if cart_items.count.zero?
 
-    ((cart_items.count / PRODUCT_COUNT) + 1) * SHIPPING_FEE_PER_PRODUCT_COUNT
+    ((cart_items.count / PRODUCTS_SET_SIZE) + 1) * SHIPPING_FEE_PER_PRODUCTS_SET
   end
 end
