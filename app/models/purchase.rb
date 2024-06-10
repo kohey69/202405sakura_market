@@ -42,6 +42,8 @@ class Purchase < ApplicationRecord
 
   def assign_address_attributes
     address = self.user.address
+    return if address.blank?
+
     self.address_name = address.name
     self.postal_code = address.postal_code
     self.prefecture = address.prefecture
