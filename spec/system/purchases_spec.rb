@@ -46,4 +46,26 @@ RSpec.describe 'Purchases', type: :system do
     end.to change(Purchase, :count).by(1)
     expect(user.cart.cart_items.count).to eq 0
   end
+
+  describe '購入履歴画面' do
+    before do
+      travel_to('2024-04-01') do
+        product = create(:product)
+        purchase = create(:purchase, user:, total_payment: 1422, total_price: 400, total_tax: 122, cod_fee: 300, shipping_fee: 600)
+        create(:purchase_item, purchase:, product:, quantity: 1)
+      end
+      login_as user, scope: :user
+      visit purchases_path
+    end
+
+    it '購入履歴画面が表示できること' do
+      expect(page).to have_content '注文履歴'
+      expect(page).to have_content '購入日時: 2024年04月01日(月) '
+      expect(page).to have_content '支払い総額(税込): 1,422円'
+      expect(page).to have_content '商品合計額(税抜): 400円'
+      expect(page).to have_content '消費税額: 122円'
+      expect(page).to have_content '代引き手数料: 300円'
+      expect(page).to have_content '配送手数料: 600円'
+    end
+  end
 end

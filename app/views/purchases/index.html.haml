@@ -1,2 +1,21 @@
-%h1 Purchases#index
-%p Find me in app/views/purchases/index.html.haml
+%h1 注文履歴
+
+- @purchases.preload(purchase_items: [product: { image_attachment: :blob }]).each do |purchase|
+  .card.mb-3
+    .card-body
+      %dl.p-3
+        %dt 注文詳細
+        %dd= "購入日時: #{l purchase.created_at, format: :date}"
+        %dd= "支払い総額(税込): #{number_to_currency purchase.total_payment}"
+        %dd.text-muted= "商品合計額(税抜): #{number_to_currency purchase.total_price}"
+        %dd.text-muted= "消費税額: #{number_to_currency purchase.total_tax}"
+        %dd.text-muted= "代引き手数料: #{number_to_currency purchase.cod_fee}"
+        %dd.text-muted= "配送手数料: #{number_to_currency purchase.shipping_fee}"
+      - purchase.purchase_items.each do |purchase_item|
+        .list-group
+          %a.list-group-item
+            .d-flex.gap-3
+              = image_tag purchase_item.product.image.variant(:thumb), class: 'purchases-image' if purchase_item.product.image.attached?
+              %h5.text-center.mb-1= purchase_item.product_name
+            %small= "単価： #{number_to_currency purchase_item.product.price}"
+            %small= "数量： #{purchase_item.quantity}"

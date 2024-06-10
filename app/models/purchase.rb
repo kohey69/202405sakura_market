@@ -13,6 +13,8 @@ class Purchase < ApplicationRecord
 
   after_create :destroy_cart_items!
 
+  scope :default_order, -> { order(created_at: :desc, id: :desc) }
+
   def assign_cart_attributes
     self.total_payment = user.cart.total_payment
     self.total_price = user.cart.total_price
