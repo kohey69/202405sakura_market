@@ -48,6 +48,7 @@ class Purchase < ApplicationRecord
     self.postal_code = address.postal_code
     self.prefecture = address.prefecture
     self.city = address.city
+    self.other_address = address.other_address
     self.phone_number = address.phone_number
   end
 
