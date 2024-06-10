@@ -3,7 +3,8 @@ FactoryBot.define do
     purchase { nil }
     product { nil }
     quantity { 1 }
-    product_name { 'MyString' }
+    product_name { 'いちご' }
+    product_price { 400 }
 
     trait :with_purchase do
       purchase

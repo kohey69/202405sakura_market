@@ -50,9 +50,9 @@ RSpec.describe 'Purchases', type: :system do
   describe '購入履歴画面' do
     before do
       travel_to('2024-04-01') do
-        product = create(:product)
+        product = create(:product, name: 'いちご', price: '400')
         purchase = create(:purchase, user:, total_payment: 1422, total_price: 400, total_tax: 122, cod_fee: 300, shipping_fee: 600)
-        create(:purchase_item, purchase:, product:, quantity: 1)
+        create(:purchase_item, purchase:, product:, product_name: 'いちご', product_price: 400, quantity: 1)
       end
       login_as user, scope: :user
       visit purchases_path
@@ -66,6 +66,9 @@ RSpec.describe 'Purchases', type: :system do
       expect(page).to have_content '消費税額: 122円'
       expect(page).to have_content '代引き手数料: 300円'
       expect(page).to have_content '配送手数料: 600円'
+      expect(page).to have_content 'いちご'
+      expect(page).to have_content '単価： 400'
+      expect(page).to have_content '数量： 1'
     end
   end
 end

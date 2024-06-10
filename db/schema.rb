@@ -95,6 +95,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_04_013816) do
     t.bigint "product_id", null: false
     t.integer "quantity", null: false
     t.string "product_name", null: false
+    t.integer "product_price", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_purchase_items_on_product_id"
