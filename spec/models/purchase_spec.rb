@@ -30,4 +30,18 @@ RSpec.describe Purchase, type: :model do
       expect(purchase.purchase_items.first.quantity).to eq 3
     end
   end
+
+  describe '#delivery_on_after_three_work_days' do
+    it '本日から数えて３営業日目を配送希望日に指定できないこと' do
+      purchase = build(:purchase, :with_user, delivery_on: 2.business_days.from_now)
+
+      expect(purchase.valid?).to eq false
+    end
+
+    it '本日から数えて４営業日目移行は配送希望日に指定ること' do
+      purchase = build(:purchase, :with_user, delivery_on: 3.business_days.from_now)
+
+      expect(purchase.valid?).to eq true
+    end
+  end
 end
