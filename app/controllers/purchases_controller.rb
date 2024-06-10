@@ -11,6 +11,7 @@ class PurchasesController < ApplicationController
 
   def new
     @purchase = current_user.purchases.build
+    @purchase.assign_address_attributes
   end
 
   def confirm
