@@ -109,6 +109,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_04_013816) do
     t.integer "total_tax", null: false, comment: "消費税額"
     t.integer "cod_fee", null: false, comment: "代引き手数料"
     t.integer "shipping_fee", null: false, comment: "配送手数料"
+    t.date "delivery_on", null: false, comment: "配送希望日"
+    t.string "delivery_time_slot", null: false, comment: "配送希望時間帯"
     t.string "address_name", default: "", null: false, comment: "宛名"
     t.string "postal_code", default: "", null: false
     t.string "prefecture", null: false

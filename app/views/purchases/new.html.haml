@@ -17,6 +17,8 @@
   .purchases__form.p-3.mb-3
     %h2 配送先住所
     = simple_form_for @purchase, local: true, data: { turbo: false }, url: confirm_purchases_path do |f|
+      = f.input :delivery_on, html5: true
+      = f.input :delivery_time_slot
       = f.input :address_name
       = f.input :postal_code
       = f.input :prefecture, as: :select, collection: JpPrefecture::Prefecture.all.map(&:name)

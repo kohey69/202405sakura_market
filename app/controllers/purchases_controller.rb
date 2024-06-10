@@ -32,7 +32,7 @@ class PurchasesController < ApplicationController
   private
 
   def purchase_params
-    params.require(:purchase).permit(:address_name, :postal_code, :prefecture, :city, :other_address, :phone_number)
+    params.require(:purchase).permit(:address_name, :postal_code, :prefecture, :city, :other_address, :phone_number, :delivery_on, :delivery_time_slot)
   end
 
   def redirect_if_cart_items_blank
