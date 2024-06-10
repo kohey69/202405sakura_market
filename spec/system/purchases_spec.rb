@@ -48,9 +48,10 @@ RSpec.describe 'Purchases', type: :system do
   end
 
   describe '購入履歴画面' do
+    let(:product) { create(:product, name: 'いちご', price: '400') }
+
     before do
       travel_to('2024-04-01') do
-        product = create(:product, name: 'いちご', price: '400')
         purchase = create(:purchase, user:, total_payment: 1422, total_price: 400, total_tax: 122, cod_fee: 300, shipping_fee: 600)
         create(:purchase_item, purchase:, product:, product_name: 'いちご', product_price: 400, quantity: 1)
       end
@@ -69,6 +70,18 @@ RSpec.describe 'Purchases', type: :system do
       expect(page).to have_content 'いちご'
       expect(page).to have_content '単価： 400'
       expect(page).to have_content '数量： 1'
+    end
+
+    context '商品の情報が変更された時' do
+      before do
+        product.update!(name: 'とちおとめ', price: 800)
+      end
+
+      it '購入時の商品名・単価が表示されること' do
+        expect(page).to have_content 'いちご'
+        expect(page).to have_content '単価： 400'
+        expect(page).to have_content '数量： 1'
+      end
     end
   end
 end
