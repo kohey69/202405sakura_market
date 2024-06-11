@@ -38,7 +38,7 @@ RSpec.describe Purchase, type: :model do
       expect(purchase.valid?).to eq false
     end
 
-    it '本日から数えて４営業日目移行は配送希望日に指定ること' do
+    it '本日から数えて４営業日目移行は配送希望日に指定できること' do
       purchase = build(:purchase, :with_user, delivery_on: 3.business_days.from_now)
 
       expect(purchase.valid?).to eq true

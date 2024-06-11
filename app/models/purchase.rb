@@ -27,7 +27,7 @@ class Purchase < ApplicationRecord
 
     if !delivery_on.workday?
       errors.add(:delivery_on, 'は営業日ではありません')
-    elsif delivery_on < 3.business_days.after(Time.current)
+    elsif delivery_on < 3.business_days.after(Date.current)
       errors.add(:delivery_on, 'は３営業日後以降を選択してください')
     end
   end
