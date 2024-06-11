@@ -18,6 +18,7 @@ ja:
         email: メールアドレス
         confirmed_at: メール認証
         password: パスワード
+        deleted_at: 退会日時
       product:
         name: 商品名
         price: 販売価格
