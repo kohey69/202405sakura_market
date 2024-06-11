@@ -1,0 +1,20 @@
+.row.p-5
+  .col-lg-9
+    %h1 シッピングカート
+    %hr
+    %ul
+      - if current_cart.cart_items.present?
+        - current_cart.cart_items.eager_load(:product).each do |cart_item|
+          %li.d-flex.gap-4
+            = image_tag cart_item.product.image.variant(:thumb), class: 'cart__product_image'
+            .cart__product_detail
+              = cart_item.product.name
+              = truncate(simple_format(cart_item.product.description, sanitize: true), escape: false, length: 100)
+            .cart__product_price= "単価(税込): #{number_to_currency cart_item.product.price}"
+      - else
+        .text-muted カート内に商品がありません
+    %hr
+    .float-end= "支払い総額(税込): #{number_to_currency current_cart.total_payment}"
+  .col-lg-3.bg-light.p-4.h-100
+    = render 'carts/cart_price_details'
+    = link_to '購入手続へ', '#', class: 'btn btn-primary'

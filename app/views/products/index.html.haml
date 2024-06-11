@@ -4,7 +4,7 @@
   - @products.each do |product|
     %li.col-md-4
       = link_to product_path(product), class: 'product__product-detail-link' do
-        .card
+        .card.mb-3
           = image_tag product.image.variant(:thumb), class: 'card-img-top product__product-card-image'
           .card-body
             .cart-title

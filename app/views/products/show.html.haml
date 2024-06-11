@@ -12,15 +12,20 @@
   .col-md-6
     = simple_format @product.description, sanitize: true
 
+  - cart_items = current_cart.cart_items.default_order
   .col-md-3.bg-light.p-4.h-100
-    .fw-bold カートに追加する
+    = render 'carts/cart_price_details'
     %ul.cart_item__list.list-group
-      - current_cart.cart_items.where.not(id: nil).each do |cart_item|
+      - cart_items.each do |cart_item|
         %li.list-group-item.d-flex.justify-content-between.align-items-center
-          = cart_item.product.name
-          %span.badge.bg-primary.rounded-pill= cart_item.quantity
+          .fw-bolder= cart_item.product.name
+          .fw-light= "#{number_to_currency cart_item.price}(税抜)"
+          .cart-item__list-links
+            %span.badge.bg-primary.rounded-pill= cart_item.quantity
+            = link_to product_cart_item_path(@product, cart_item), class: 'btn btn-sm btn-danger', data: { turbo_method: :delete } do
+              %i.bi.bi-trash
     .cart_item__form
-      = simple_form_for [@product, @cart_item], url: @cart_item.new_record? ? nil : product_cart_item_path(@product) do |f|
+      = simple_form_for [@product, @cart_item], url: @cart_item.new_record? ? nil : product_cart_item_path(@product, @cart_item) do |f|
         = f.input :product_id, as: :hidden, input_html: { value: @product.id }
         = f.input :quantity
         = f.button :button, class: 'btn btn-secondary' do
