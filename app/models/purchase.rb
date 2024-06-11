@@ -38,10 +38,7 @@ class Purchase < ApplicationRecord
     self.shipping_fee = cart.shipping_fee
   end
 
-  def assign_address_attributes
-    address = self.user.address
-    return if address.blank?
-
+  def assign_address_attributes(address)
     self.address_name = address.name
     self.postal_code = address.postal_code
     self.prefecture = address.prefecture
