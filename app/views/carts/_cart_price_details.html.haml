@@ -1,8 +1,0 @@
-.cart_item__details
-  %dl.p-3
-    %dt.mb-1 カートの合計金額
-    %dd= "支払い総額(税込): #{number_to_currency current_cart.total_payment}"
-    %dd.text-muted= "商品合計(税抜): #{number_to_currency current_cart.total_price}"
-    %dd.text-muted= "消費税合計: #{number_to_currency current_cart.total_tax}"
-    %dd.text-muted= "代引き手数料: #{number_to_currency current_cart.cod_fee}"
-    %dd.text-muted= "配送手数料: #{number_to_currency current_cart.shipping_fee}"

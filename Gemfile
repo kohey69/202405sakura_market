@@ -32,7 +32,6 @@ group :test do
 end
 
 group :development do
-  gem 'bullet'
   gem 'letter_opener_web'
   gem 'web-console'
 end
