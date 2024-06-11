@@ -23,7 +23,7 @@ class PurchasesController < ApplicationController
   def create
     @purchase = current_user.purchases.build(purchase_params)
     @purchase.assign_cart_attributes(current_cart)
-    @purchase.save_with_purchase_items!
+    @purchase.purchase_and_destroy_cart_items!
     redirect_to purchases_path, notice: t('controllers.created')
   end
 

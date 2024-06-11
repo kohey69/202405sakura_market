@@ -11,8 +11,6 @@ class Purchase < ApplicationRecord
   validates :city, presence: true
   validates :other_address, presence: true
 
-  after_create :destroy_cart_items!
-
   def assign_cart_attributes(cart)
     self.total_payment = cart.total_payment
     self.total_price = cart.total_price
@@ -21,7 +19,7 @@ class Purchase < ApplicationRecord
     self.shipping_fee = cart.shipping_fee
   end
 
-  def save_with_purchase_items!
+  def purchase_and_destroy_cart_items!
     transaction do
       self.user.cart.cart_items.each do |cart_item|
         purchase_item = self.purchase_items.build
@@ -30,10 +28,7 @@ class Purchase < ApplicationRecord
         purchase_item.quantity = cart_item.quantity
       end
       self.save!
+      self.user.cart.cart_items.destroy_all
     end
-  end
-
-  def destroy_cart_items!
-    self.user.cart.cart_items.destroy_all
   end
 end
