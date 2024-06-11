@@ -1,6 +1,6 @@
 class Cart < ApplicationRecord
-  SHIPPING_FEE_PER_PRODUCTS_SET = 600
-  PRODUCTS_SET_SIZE = 5
+  SHIPPING_FEE_PER_PRODUCTS_SET = 600 # １セットあたりの送料
+  PRODUCTS_SET_SIZE = 5 # １セットの商品数
   FEE_TAX_RATE = 0.1
 
   belongs_to :user, optional: true
