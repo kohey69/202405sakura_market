@@ -1,8 +1,8 @@
 class Admins::UsersController < Admins::ApplicationController
-  before_action :set_user, only: %i[edit update]
+  before_action :set_user, only: %i[edit update destroy]
 
   def index
-    @users = User.default_order
+    @users = User.order(deleted_at: :desc).default_order
   end
 
   def edit
@@ -15,6 +15,11 @@ class Admins::UsersController < Admins::ApplicationController
       flash[:alert] = t('controllers.failed')
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @user.soft_destroy!
+    redirect_to admins_users_path, notice: t('controllers.destroyed')
   end
 
   private
