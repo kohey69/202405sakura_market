@@ -13,7 +13,7 @@ class PurchasesController < ApplicationController
 
   def confirm
     @purchase = current_user.purchases.build(purchase_params)
-    @purchase.assign_cart_attributes
+    @purchase.assign_cart_attributes(current_cart)
     if @purchase.invalid?
       flash[:alert] = t('controllers.failed')
       render :new, status: :unprocessable_entity
@@ -22,7 +22,7 @@ class PurchasesController < ApplicationController
 
   def create
     @purchase = current_user.purchases.build(purchase_params)
-    @purchase.assign_cart_attributes
+    @purchase.assign_cart_attributes(current_cart)
     @purchase.save_with_purchase_items!
     redirect_to purchases_path, notice: t('controllers.created')
   end
