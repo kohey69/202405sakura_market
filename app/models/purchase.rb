@@ -38,6 +38,15 @@ class Purchase < ApplicationRecord
     self.shipping_fee = cart.shipping_fee
   end
 
+  def assign_address_attributes(address)
+    self.address_name = address.name
+    self.postal_code = address.postal_code
+    self.prefecture = address.prefecture
+    self.city = address.city
+    self.other_address = address.other_address
+    self.phone_number = address.phone_number
+  end
+
   def purchase_and_destroy_cart_items!
     transaction do
       self.user.cart.cart_items.each do |cart_item|
