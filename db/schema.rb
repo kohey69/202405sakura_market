@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_04_013816) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_11_040350) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -109,6 +109,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_04_013816) do
     t.integer "total_tax", null: false, comment: "消費税額"
     t.integer "cod_fee", null: false, comment: "代引き手数料"
     t.integer "shipping_fee", null: false, comment: "配送手数料"
+    t.date "delivery_on", null: false, comment: "配送希望日"
+    t.string "delivery_time_slot", null: false, comment: "配送希望時間帯"
     t.string "address_name", default: "", null: false, comment: "宛名"
     t.string "postal_code", default: "", null: false
     t.string "prefecture", null: false
@@ -130,6 +132,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_04_013816) do
     t.string "unconfirmed_email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
   end

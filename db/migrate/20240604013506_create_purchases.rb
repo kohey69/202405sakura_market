@@ -7,6 +7,8 @@ class CreatePurchases < ActiveRecord::Migration[7.1]
       t.integer :total_tax, null: false, comment: '消費税額'
       t.integer :cod_fee, null: false, comment: '代引き手数料'
       t.integer :shipping_fee, null: false, comment: '配送手数料'
+      t.date :delivery_on, null: false, comment: '配送希望日'
+      t.string :delivery_time_slot, null: false, comment: '配送希望時間帯'
       t.string :address_name, null: false, default: '', comment: '宛名'
       t.string :postal_code, null: false, default: ''
       t.string :prefecture, null: false
