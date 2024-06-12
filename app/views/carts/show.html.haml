@@ -17,4 +17,4 @@
     .float-end= "支払い総額(税込): #{number_to_currency current_cart.total_payment}"
   .col-lg-3.bg-light.p-4.h-100
     = render 'carts/cart_price_details'
-    = link_to '購入手続へ', '#', class: 'btn btn-primary'
+    = link_to '購入手続へ', new_purchase_path, class: 'btn btn-primary'

@@ -15,6 +15,11 @@ Rails.application.routes.draw do
     resources :cart_items, only: %i[create update destroy]
   end
   resource :cart, only: %i[show]
+  resources :purchases, only: %i[index show new create] do
+    collection do
+      post :confirm
+    end
+  end
   resource :address, only: %i[show new create edit update]
   root 'home#index'
 
