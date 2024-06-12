@@ -11,6 +11,8 @@ class Purchase < ApplicationRecord
   validates :city, presence: true
   validates :other_address, presence: true
 
+  scope :default_order, -> { order(created_at: :desc, id: :desc) }
+
   def assign_cart_attributes(cart)
     self.total_payment = cart.total_payment
     self.total_price = cart.total_price
@@ -23,8 +25,9 @@ class Purchase < ApplicationRecord
     transaction do
       self.user.cart.cart_items.each do |cart_item|
         purchase_item = self.purchase_items.build
-        purchase_item.product_name = cart_item.product.name
         purchase_item.product_id = cart_item.product_id
+        purchase_item.product_name = cart_item.product.name
+        purchase_item.product_price = cart_item.product.price
         purchase_item.quantity = cart_item.quantity
       end
       self.save!

@@ -1,7 +1,9 @@
 class PurchasesController < ApplicationController
+  before_action :authenticate_user!
   before_action :redirect_if_cart_items_blank, only: %i[new confirm create]
 
   def index
+    @purchases = current_user.purchases.default_order
   end
 
   def show
