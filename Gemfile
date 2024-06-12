@@ -5,8 +5,10 @@ gem 'rails', '~> 7.1.3', '>= 7.1.3.3'
 
 gem 'acts_as_list'
 gem 'bootsnap', require: false
+gem 'business_time'
 gem 'cssbundling-rails'
 gem 'devise'
+gem 'enumerize'
 gem 'haml-rails'
 gem 'image_processing'
 gem 'jp_prefecture'

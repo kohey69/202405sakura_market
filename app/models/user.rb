@@ -12,4 +12,16 @@ class User < ApplicationRecord
   scope :default_order, -> { order(id: :asc) }
 
   after_create :create_cart!
+
+  def soft_destroy!
+    self.update!(deleted_at: Time.current)
+  end
+
+  def active_for_authentication?
+    super && !deleted_at
+  end
+
+  def inactive_message
+    deleted_at ? :deleted_account : super
+  end
 end

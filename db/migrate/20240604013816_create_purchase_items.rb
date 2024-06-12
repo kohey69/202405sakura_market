@@ -5,6 +5,7 @@ class CreatePurchaseItems < ActiveRecord::Migration[7.1]
       t.references :product, null: false, foreign_key: true
       t.integer :quantity, null: false
       t.string :product_name, null: false
+      t.integer :product_price, null: false
       t.index %i[purchase_id product_id], unique: true
 
       t.timestamps

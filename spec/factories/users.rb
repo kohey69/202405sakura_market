@@ -8,5 +8,9 @@ FactoryBot.define do
     trait :unconfirmed do
       confirmed_at { nil }
     end
+
+    trait :deleted do
+      deleted_at { Time.zone.now }
+    end
   end
 end

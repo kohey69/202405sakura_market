@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   namespace :admins do
-    resources :users, only: %i[index edit update]
+    resources :users, only: %i[index edit update destroy]
     resources :products, only: %i[index show new create edit update]
     root 'products#index'
   end
