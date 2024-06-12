@@ -12,10 +12,13 @@ RSpec.describe 'Purchases', type: :system do
   end
 
   it '配送先住所を入力すると購入確定画面に遷移できること' do
+    travel_to '2024-04-01'
     create(:cart_item, :with_product, cart: user.cart)
     login_as user, scope: :user
     visit new_purchase_path
 
+    fill_in 'purchase[delivery_on]', with: '2024-04-04'.to_date
+    select '8時〜12時', from: 'purchase[delivery_time_slot]'
     fill_in 'purchase[address_name]', with: '田中 太郎'
     fill_in 'purchase[postal_code]', with: 'xxx-xxxx'
     select '兵庫県', from: 'purchase[prefecture]'
@@ -29,10 +32,13 @@ RSpec.describe 'Purchases', type: :system do
   end
 
   it '購入が確定するとユーザーのカートアイテムが削除されること' do
+    travel_to '2024-04-01'
     create(:cart_item, :with_product, cart: user.cart)
     login_as user, scope: :user
     visit new_purchase_path
 
+    fill_in 'purchase[delivery_on]', with: '2024-04-04'.to_date
+    select '8時〜12時', from: 'purchase[delivery_time_slot]'
     fill_in 'purchase[address_name]', with: '田中 太郎'
     fill_in 'purchase[postal_code]', with: 'xxx-xxxx'
     select '兵庫県', from: 'purchase[prefecture]'
