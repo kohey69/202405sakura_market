@@ -22,7 +22,7 @@ RSpec.describe '商品', type: :system do
     create(:product, name: 'いちご')
     create(:product, name: 'レモン')
     create(:product, :unpublished, name: 'バナナ')
-    visit admins_products_path
+    visit admins_root_path
 
     expect(page).to have_content 'いちご'
     expect(page).to have_content 'レモン'
