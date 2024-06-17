@@ -9,13 +9,12 @@ class PurchasesController < ApplicationController
   end
 
   def new
-    @purchase = current_user.purchases.build
-    @purchase.assign_address_attributes(current_user.address) if current_user.address.present?
+    @purchase = current_user.purchases.build_with_purchase_items
+    @purchase.assign_address_attributes(current_user.address)
   end
 
   def confirm
-    @purchase = current_user.purchases.build(purchase_params)
-    @purchase.assign_cart_attributes(current_cart)
+    @purchase = current_user.purchases.build_with_purchase_items(purchase_params)
     if @purchase.invalid?
       flash[:alert] = t('controllers.failed')
       render :new, status: :unprocessable_entity
@@ -23,10 +22,13 @@ class PurchasesController < ApplicationController
   end
 
   def create
-    @purchase = current_user.purchases.build(purchase_params)
-    @purchase.assign_cart_attributes(current_cart)
-    @purchase.purchase_and_destroy_cart_items!
-    redirect_to purchases_path, notice: t('controllers.created')
+    @purchase = current_user.purchases.build_with_purchase_items(purchase_params)
+    if @purchase.save_with_destroy_cart_items
+      redirect_to purchases_path, notice: t('controllers.created')
+    else
+      flash.now[:alert] = t('controllers.failed')
+      render :new, status: :unprocessable_entity
+    end
   end
 
   private

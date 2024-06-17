@@ -5,7 +5,7 @@ class CreateProducts < ActiveRecord::Migration[7.1]
       t.integer :price, null: false
       t.text :description, default: '', null: false
       t.boolean :published, null: false, default: false
-      t.integer :position
+      t.integer :position, null: false
       t.timestamps
     end
   end
