@@ -30,7 +30,7 @@ class CartItemsController < ApplicationController
   private
 
   def set_product
-    @product = Product.find(params[:product_id])
+    @product = Product.published.find(params[:product_id])
   end
 
   def set_cart_item
