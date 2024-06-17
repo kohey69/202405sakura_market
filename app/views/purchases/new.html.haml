@@ -17,6 +17,10 @@
   .purchases__form.p-3.mb-3
     %h2 配送先住所
     = simple_form_for @purchase, local: true, data: { turbo: false }, url: confirm_purchases_path do |f|
+      - if @purchase.errors[:base].any?
+        %ul.alert.alert-danger
+          - @purchase.errors[:base].each do |message|
+            %li.mx-2= message
       = f.input :delivery_on, html5: true
       = f.input :delivery_time_slot
       = f.input :address_name
