@@ -26,6 +26,7 @@ class PurchasesController < ApplicationController
     if @purchase.save_with_destroy_cart_items
       redirect_to purchases_path, notice: t('controllers.created')
     else
+      flash.now[:alert] = t('controllers.failed')
       render :new, status: :unprocessable_entity
     end
   end
