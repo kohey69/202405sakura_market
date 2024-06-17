@@ -85,7 +85,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_11_040350) do
     t.integer "price", null: false
     t.text "description", default: "", null: false
     t.boolean "published", default: false, null: false
-    t.integer "position"
+    t.integer "position", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
