@@ -1,0 +1,19 @@
+%h1 さくらマーケット販売商品一覧
+%p 販売中の商品一覧ページ
+%ul.product__list.row
+  - @products.each do |product|
+    %li.col-md-4
+      = link_to product_path(product), class: 'product__product-detail-link' do
+        .card.mb-3
+          = image_tag product.image.variant(:thumb), class: 'card-img-top product__product-card-image'
+          .card-body
+            .cart-title
+              = product.name
+            %dl
+              %dt 価格(税込)
+              %dd= number_to_currency product.price_with_tax
+              %dt= Product.human_attribute_name(:price)
+              %dd= number_to_currency product.price
+              %dt 消費税額
+              %dd= number_to_currency product.tax
+            %p.card-text= truncate(simple_format(product.description, sanitize: true), escape: false, length: 140)

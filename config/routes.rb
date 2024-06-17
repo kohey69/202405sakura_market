@@ -1,10 +1,33 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  devise_for :users, controllers: {
+    registrations: 'users/registrations',
+    sessions: 'users/sessions',
+    confirmations: 'users/confirmations',
+  }
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
+  devise_for :administrators, controllers: {
+    registrations: 'admins/devise/registrations',
+    sessions: 'admins/devise/sessions',
+    confirmations: 'admins/devise/confirmations',
+  }
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  resources :products, only: %i[index show] do
+    resources :cart_items, only: %i[create update destroy]
+  end
+  resource :cart, only: %i[show]
+  resources :purchases, only: %i[index show new create] do
+    collection do
+      post :confirm
+    end
+  end
+  resource :address, only: %i[show new create edit update]
+  root 'home#index'
+
+  namespace :admins do
+    resources :users, only: %i[index edit update destroy]
+    resources :products, only: %i[show new create edit update]
+    root 'products#index'
+  end
+
+  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 end

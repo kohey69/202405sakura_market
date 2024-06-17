@@ -1,0 +1,39 @@
+.product__product-card-image {
+  height: 200px;
+  object-fit: cover;
+}
+
+.product__product-form-image {
+  height: 200px;
+  object-fit: cover;
+}
+
+.product__product-image {
+  width: 100%;
+  object-fit: cover;
+}
+
+.product__product-detail-link {
+  text-decoration: none;
+  color: #000;
+}
+
+ul.product__list {
+  list-style-type: none;
+
+  li {
+    @media (max-width : 768px) {
+      margin-bottom: 10px;
+    }
+  }
+
+  .card {
+    position: relative;
+  }
+
+  .handle {
+    position: absolute;
+    top: 0;
+    left: 10px;
+  }
+}

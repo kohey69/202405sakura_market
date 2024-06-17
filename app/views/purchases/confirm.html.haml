@@ -1,0 +1,39 @@
+.p-5
+  .bg-light.p-5
+    %h1 購入情報
+    %h2 商品情報の確認
+    %hr
+    %ul
+      - current_cart.cart_items.each do |cart_item|
+        %li.d-flex.gap-4.border.p-2.rounded
+          = image_tag cart_item.product.image.variant(:thumb), class: 'purchases__product-image'
+          .cart__product-detail
+            = cart_item.product.name
+            = truncate(simple_format(cart_item.product.description, sanitize: true), escape: false, length: 100)
+          %dl
+            %dt= "#{number_to_currency cart_item.product.price_with_tax}(税込)"
+            %dd= "単価(税抜): ¥#{cart_item.product.price}"
+            %dd= "数量: #{cart_item.quantity}個"
+    %hr
+    .purchase__payment
+      .text-muted= "商品合計額(税抜): ¥#{current_cart.total_price}"
+      .text-muted= "消費税額合計: ¥#{current_cart.total_tax}"
+      .fw-bold= "支払総額(税込): ¥#{current_cart.total_payment}"
+    %h2 配送情報の確認
+    %dl
+      %dt 配送先住所
+      %dd= "配送希望日時：#{l @purchase.delivery_on, format: :long} #{@purchase.delivery_time_slot_text}"
+      %dd= "宛名：#{@purchase.address_name}"
+      %dd= "郵便番号：#{@purchase.postal_code}"
+      %dd= "住所：#{@purchase.prefecture + @purchase.city + @purchase.other_address}"
+      %dd= "連絡先電話番号：#{@purchase.phone_number}"
+    = simple_form_for @purchase do |f|
+      = f.input :delivery_on, as: :hidden
+      = f.input :delivery_time_slot, as: :hidden
+      = f.input :address_name, as: :hidden
+      = f.input :postal_code, as: :hidden
+      = f.input :prefecture, as: :hidden
+      = f.input :city, as: :hidden
+      = f.input :other_address, as: :hidden
+      = f.input :phone_number, as: :hidden
+      = f.button :submit, '購入を確定する'

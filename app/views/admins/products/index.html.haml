@@ -1,0 +1,27 @@
+%h1 商品一覧
+%p 商品マスタの一覧です。画像をクリックして商品情報を編集できます。
+%ul.product__list.row{ data: { controller: 'sortable', sortable_resource_name_value: 'product' } }
+  - @products.each do |product|
+    %li.col-md-4{ data: { sortable_update_url: admins_product_path(product, format: :json) } }
+      = link_to admins_product_path(product), class: 'product__product-detail-link' do
+        .card
+          .handle.bi.bi-arrow-left-right.btn.btn-light
+          - if product.image.attached?
+            = image_tag product.image.variant(:thumb), class: 'card-img-top product__product-card-image'
+          - else
+            = image_tag 'no_image.png', class: 'card-img-top product__product-card-image'
+          .card-body
+            .cart-title
+              = product.name
+              - if product.published?
+                %span.badge.text-bg-primary 公開
+              - else
+                %span.badge.text-bg-secondary 非公開
+            %dl
+              %dt 価格(税込)
+              %dd= number_to_currency product.price_with_tax
+              %dt= Product.human_attribute_name(:price)
+              %dd= number_to_currency product.price
+              %dt 消費税額
+              %dd= number_to_currency product.tax
+            %p.card-text= truncate(simple_format(product.description, sanitize: true), escape: false, length: 140)

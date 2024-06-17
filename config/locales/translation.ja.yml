@@ -1,0 +1,81 @@
+ja:
+  activerecord:
+    models:
+      administrator: 管理者
+      user: ユーザー
+      product: 商品
+      address: 送付先住所
+      cart: カート
+      cart_item: カート内の商品
+      purchase: 購入
+
+    attributes:
+      administrator:
+        email: メールアドレス
+        password: パスワード
+      user:
+        name: 氏名
+        email: メールアドレス
+        confirmed_at: メール認証
+        password: パスワード
+        deleted_at: 退会日時
+      product:
+        name: 商品名
+        price: 販売価格
+        description: 商品説明
+        published: 公開する
+        position: 表示順
+        image: サムネイル画像
+      address:
+        name: 宛名
+        postal_code: 郵便番号
+        prefecture: 都道府県
+        city: 市区町村
+        other_address: その他住所
+        phone_number: 連絡先電話番号
+      cart_item:
+        quantity: 数量
+      purchase:
+        delivery_on: 配送希望日
+        delivery_time_slot: 配送希望日時
+        address_name: 宛名
+        postal_code: 郵便番号
+        prefecture: 都道府県
+        city: 市区町村
+        other_address: その他住所
+        phone_number: 連絡先電話番号
+
+  enumerize:
+    purchase:
+      delivery_time_slot:
+        from_8_to_12: 8時〜12時
+        from_12_to_14: 12時〜14時
+        from_14_to_16: 14時〜16時
+        from_16_to_18: 16時〜18時
+        from_18_to_20: 18時〜20時
+        from_20_to_21: 20時〜21時
+  views:
+    back: 戻る
+    new: 新規登録
+    edit: 編集
+    show: 詳細
+    save: 登録
+    sending: 処理中
+    destroy: 削除
+    confirm: 削除します。よろしいですか？
+    invited: 招待メールを送信します。よろしいですか？
+    pagination:
+      first: "&laquo; 最初"
+      last: "最後 &raquo;"
+      next: "次 &rsaquo;"
+      previous: "&lsaquo; 前"
+      truncate: "&hellip;"
+
+  controllers:
+    created: 新規登録しました
+    destroyed: 削除しました
+    updated: 更新しました
+    invited: 招待メールを送信しました
+    answered: 回答しました
+    copied: コピーしました
+    failed: 失敗しました
