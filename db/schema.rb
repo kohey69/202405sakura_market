@@ -46,9 +46,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_11_040350) do
     t.bigint "user_id", null: false
     t.string "name", default: "", null: false, comment: "宛名"
     t.string "postal_code", default: "", null: false
-    t.string "prefecture", default: "", null: false
-    t.string "city", default: "", null: false
-    t.string "other_address", default: "", null: false, comment: "丁目・番地・建物名"
+    t.string "prefecture", null: false
+    t.string "city", null: false
+    t.string "other_address", null: false, comment: "丁目・番地・建物名"
     t.string "phone_number", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -81,9 +81,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_11_040350) do
   end
 
   create_table "products", force: :cascade do |t|
-    t.string "name", default: "", null: false
+    t.string "name", null: false
     t.integer "price", null: false
-    t.text "description", default: ""
+    t.text "description", default: "", null: false
     t.boolean "published", default: false, null: false
     t.integer "position"
     t.datetime "created_at", null: false
@@ -123,7 +123,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_11_040350) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name", default: "", null: false
+    t.string "name", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "confirmation_token"

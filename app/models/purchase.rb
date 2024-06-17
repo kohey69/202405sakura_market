@@ -57,7 +57,7 @@ class Purchase < ApplicationRecord
         purchase_item.quantity = cart_item.quantity
       end
       self.save!
-      self.user.cart.cart_items.destroy_all
+      self.user.cart.cart_items.each(&:destroy!)
     end
   end
 end

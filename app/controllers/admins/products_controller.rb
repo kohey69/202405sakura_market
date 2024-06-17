@@ -15,7 +15,7 @@ class Admins::ProductsController < Admins::ApplicationController
   def create
     @product = Product.new(product_params)
     if @product.save
-      redirect_to admins_products_path, notice: t('controllers.created')
+      redirect_to admins_root_path, notice: t('controllers.created')
     else
       flash.now[:alert] = t('controllers.failed')
       render :new, status: :unprocessable_entity

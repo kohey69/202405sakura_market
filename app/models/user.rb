@@ -5,7 +5,7 @@ class User < ApplicationRecord
 
   has_one :address, dependent: :destroy
   has_one :cart, dependent: :destroy
-  has_many :purchases, dependent: :destroy
+  has_many :purchases, dependent: :destroy # userは物理削除しないので購入履歴は退会時もアプリに残る
 
   validates :name, presence: true
 
