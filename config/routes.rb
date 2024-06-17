@@ -25,7 +25,7 @@ Rails.application.routes.draw do
 
   namespace :admins do
     resources :users, only: %i[index edit update destroy]
-    resources :products, only: %i[index show new create edit update]
+    resources :products, only: %i[show new create edit update]
     root 'products#index'
   end
 
